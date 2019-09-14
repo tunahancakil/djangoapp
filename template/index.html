@@ -4,6 +4,12 @@
 
 </head>
 <body>
-Anasayfa... {{isim}}
+{% for x in soru_baslik %}
+<h1> {{context}} </h1>
+<p>
+{{soru_baslik.as_p}}
+{{sorularim}}
+</p>
+{% endfor %}
 </body>
 </html>

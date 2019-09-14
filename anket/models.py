@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 
+
 class UyeKurumlar(models.Model):
     id = models.AutoField(primary_key=True)
     unvan = models.CharField(max_length=250,verbose_name="İş Yeri Ünvanı")
