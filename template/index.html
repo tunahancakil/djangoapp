@@ -15,14 +15,17 @@
     <h1>Hoşgeldin {{isim}} </h1><br>
     {% load static %}
     <img src="{% static "/images/pp.jpg" %}" alt="image"><br>    
-    {% for sorular in sorularim%}
-        {{sorular.id}}.  {{sorular.soru_icerik}} <br>
-        <input type="radio" name="puan" value="{{sorular.cevap}}"> Çok İyi
-        <input type="radio" name="puan" value="{{sorular.cevap}}"> İyi
-        <input type="radio" name="puan" value="{{sorular.cevap}}"> Orta
-        <input type="radio" name="puan" value="{{sorular.cevap}}"> Kötü
-        <input type="radio" name="puan" value="{{sorular.cevap}}"> Çok Kötü <br>
-    {% endfor %}
+        <form onsubmit="kaydet()">
+            {% for sorular in sorularim%}
+                {{sorular.id}}.  {{sorular.soru_icerik}} <br>
+                <input type="radio" name="puan5" value="5"> Çok İyi
+                <input type="radio" name="puan4" value="4"> İyi
+                <input type="radio" name="puan3" value="3"> Orta
+                <input type="radio" name="puan2" value="2"> Kötü
+                <input type="radio" name="puan1" value="1"> Çok Kötü <br>
+            {% endfor %}
+            <input type="submit" name="Kaydet">
+        </form>
     </div>
     <div class="col">
     </div>

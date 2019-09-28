@@ -3,10 +3,12 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from anket.models import Sorular
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django import forms
 
 # Create your views here.
 def home_view(request):
     sorularım = Sorular.objects.all()
+    cevap =
     if request.user.is_authenticated:
         context = {
             'isim' : 'Tuna',
