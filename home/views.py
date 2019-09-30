@@ -8,7 +8,6 @@ from django import forms
 # Create your views here.
 def home_view(request):
     sorularım = Sorular.objects.all()
-    cevap =
     if request.user.is_authenticated:
         context = {
             'isim' : 'Tuna',
@@ -16,6 +15,7 @@ def home_view(request):
         }
     else:
         context = {
-            'isim' : 'Misafir'
+            'isim' : 'Misafir',            
+            'sorularim' : sorularım,
         }
     return render(request, 'index.html',context)

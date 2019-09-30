@@ -19,5 +19,5 @@ class Sorular(models.Model):
     soru_baslik = models.CharField(max_length=250,verbose_name="Soru Grubu")
     soru_icerik = models.TextField(verbose_name="Soru İçerik")
     cevap = models.IntegerField(editable=True)
-    islem_tarihi = models.DateTimeField()
+    islem_tarihi = models.DateTimeField(auto_now_add=True)
     kullanici_adi = models.CharField(max_length=50)
