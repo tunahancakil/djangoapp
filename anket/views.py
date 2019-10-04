@@ -5,7 +5,8 @@ from anket.forms import AnketForm
 
 # Create your views here.
 def index(request):
-    return render(request,'index.html')
+    return_deger = {'x':'Hello world!!! this is view.py'}
+    return render(request,'index.html', context= return_deger)
 
 def anket_form_view(request):
     form = AnketForm()
