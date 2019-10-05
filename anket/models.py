@@ -21,3 +21,10 @@ class Sorular(models.Model):
     cevap = models.IntegerField(editable=True)
     islem_tarihi = models.DateTimeField(auto_now_add=True)
     kullanici_adi = models.CharField(max_length=50)
+
+class Yoneticiler(models.Model): 
+    id = models.AutoField(primary_key= True)   
+    yonetici_ad = models.CharField(max_length=250,verbose_name="Adı")
+    yonetici_soyad = models.CharField(max_length=250,verbose_name="Soyadı")
+    kurum_kod = models.CharField(max_length=250,verbose_name="kurum no")
+

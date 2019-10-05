@@ -5,4 +5,4 @@ from anket.models import Sorular,UyeKurumlar
 class AnketForm(forms.ModelForm):
     class Meta():
         model = Sorular
-        fields = ('cevap',)
+        fields = ('cevap','soru_icerik',)

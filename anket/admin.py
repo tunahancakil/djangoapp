@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import UyeKurumlar, Sorular
+from .models import *
 
 
 @admin.register(UyeKurumlar)
@@ -14,3 +14,7 @@ class UyeKurumlarAdmin(admin.ModelAdmin):
 @admin.register(Sorular)
 class Sorular(admin.ModelAdmin):
     list_display = ['soru_baslik','soru_icerik','islem_tarihi']
+
+@admin.register(Yoneticiler)
+class Yoneticiler(admin.ModelAdmin):
+    list_display = ['id','yonetici_ad','yonetici_soyad']

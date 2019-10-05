@@ -19,14 +19,11 @@ def base(request):
 def anket_form_view(request):
     form = AnketForm()
     sorularim = Sorular.objects.all()
-
     if request.method == "POST":
         form = AnketForm(request.POST)
-
         if form.is_valid():
             form.save(commit=True)
             return index(request)
         else:
-            print ('Error form geçerli bilgiler içermiyor.')
-
+            print ('Hata form geçerli bilgiler içermiyor.')
     return render(request,'anket-tema/anket.html',{'form':form,'sorularim' : sorularim})
