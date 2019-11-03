@@ -1,11 +1,10 @@
 from django.db import models
 from django.utils import timezone
 
-
-class UyeKurumlar(models.Model):
+class Kurumlar(models.Model):
     id = models.AutoField(primary_key=True)
     unvan = models.CharField(max_length=250,verbose_name="İş Yeri Ünvanı")
-    iletisim_no = models.CharField(max_length=250)
+    iletisim_no = models.CharField(max_length=10,verbose_name="İletişim No")
     email = models.EmailField(max_length=50)    
     puan = models.IntegerField(editable=True)
     islem_tarihi = models.DateTimeField()
@@ -13,6 +12,38 @@ class UyeKurumlar(models.Model):
 
     def __str__(self):
         return self.unvan
+        
+class Yoneticiler(models.Model):
+    id = models.AutoField(primary_key=True)
+    ad = models.CharField(max_length=50,verbose_name="Yönetici Ad")
+    soyad = models.CharField(max_length=50,verbose_name="Yönetici Soyad")
+    email = models.EmailField(max_length=50)
+    iletisim_no = models.CharField(max_length=10,verbose_name="İletişim No")
+    kurum = models.ForeignKey(Kurumlar, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return "%s %s %s" % (self.ad, self.soyad, self.kurum.unvan)
+
+class Isciler(models.Model):
+    id = models.AutoField(primary_key=True)
+    ad = models.CharField(max_length=50,verbose_name="Ad")
+    soyad = models.CharField(max_length=50,verbose_name="Soyad")
+    email = models.EmailField(max_length=50)
+    iletisim_no = models.CharField(max_length=10,verbose_name="İletişim No")
+    kurum = models.ForeignKey(Kurumlar, on_delete=models.CASCADE)
+    yonetici = models.ManyToManyField(Yoneticiler)
+    islem_tarihi = models.DateField()
+
+    
+    def __str__(self):
+        return self.ad
+
+    class Meta:
+        ordering = ('id',)
+
+    def __str__(self):
+        return "%s %s %s" % (self.ad,self.soyad,self.kurum.unvan)
+
 
 class Sorular(models.Model):
     id = models.AutoField(primary_key=True)
@@ -21,10 +52,3 @@ class Sorular(models.Model):
     cevap = models.IntegerField(editable=True)
     islem_tarihi = models.DateTimeField(auto_now_add=True)
     kullanici_adi = models.CharField(max_length=50)
-
-class Yoneticiler(models.Model): 
-    id = models.AutoField(primary_key= True)   
-    yonetici_ad = models.CharField(max_length=250,verbose_name="Adı")
-    yonetici_soyad = models.CharField(max_length=250,verbose_name="Soyadı")
-    kurum_kod = models.CharField(max_length=250,verbose_name="kurum no")
-
