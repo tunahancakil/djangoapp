@@ -1,1 +1,1 @@
-web: sudo python manage.py runserver 80
+web: python manage.py runserver 80
