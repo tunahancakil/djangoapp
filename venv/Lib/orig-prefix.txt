@@ -1,1 +1,1 @@
-c:\users\tunah\appdata\local\programs\python\python37-32
+c:\users\tunahanc\appdata\local\programs\python\python37

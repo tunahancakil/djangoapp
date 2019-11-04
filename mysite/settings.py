@@ -25,7 +25,7 @@ SECRET_KEY = 'j-khsnkvnqi5+tf05lw9%e_lvn4^l(wf8pk$d5pbe9%h3r1ybi'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['boiling-woodland-74015.herokuapp.com']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition

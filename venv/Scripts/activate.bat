@@ -1,6 +1,6 @@
 @echo off
 
-set "VIRTUAL_ENV=C:\Users\tunah\Desktop\Project\mysite\venv"
+set "VIRTUAL_ENV=C:\Users\tunahanc\Desktop\gitproject\djangoapp\venv"
 
 if defined _OLD_VIRTUAL_PROMPT (
     set "PROMPT=%_OLD_VIRTUAL_PROMPT%"
