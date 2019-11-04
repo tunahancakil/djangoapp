@@ -1,0 +1,23 @@
+{% include "anket-tema\head.html" %}
+{% load static %}
+    <nav>
+    <div class="col-sm-6" style="align:top;">
+    </div>
+        <br><br><br><br><br><br>
+        <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-4" style="background-color:lavender;"><img src="{% static '/img/anket/anket-1.png' %}" width="100%" height="%100" alt="benipuanla"><br></div>
+            <div class="col-sm-4" >
+                <form method="post" action="">
+                {% csrf_token %}
+                {% for sorular in sorularim%}
+                        <b>{{sorular.id}}.</b> {{sorular.soru_icerik}} <br>
+                        {{form.as_p}}
+                {% endfor %}
+                <input type="submit" class="btn btn-primary" value="Submit">
+                </form>
+            </div>
+        </div>        
+
+    </nav>
+{% include "anket-tema\footer.html" %}

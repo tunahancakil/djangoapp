@@ -1,4 +1,9 @@
 {
+<<<<<<< HEAD
     "python.pythonPath": "C:\\Users\\tunahanc\\AppData\\Local\\Programs\\Python\\Python37\\python.exe",
     "python.linting.pylintEnabled": false
+=======
+    "python.pythonPath": "venv\\Scripts\\python.exe",
+    "python.linting.enabled": false
+>>>>>>> d71547edd63797de0d3c326ab63ae201bc1d4e00
 }

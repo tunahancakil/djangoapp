@@ -16,10 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from home.views import home_view
-from anket.views import anket_form_view
+from anket.views import *
 
 urlpatterns = [
-    path('', home_view, name='index'),
+    path('tema/index',index,name='index'),
+    path('tema/base',base,name='base'),
+    path('tema/head',head,name='head'),
+    path('tema/iletisim',head,name='iletisim'),
+    path('', home_view, name='home'),
     path('admin/', admin.site.urls),
-    path('formpage/',anket_form_view, name='anket_form') 
+    path('tema/anket',anket_form_view, name='anket_form') 
 ]
