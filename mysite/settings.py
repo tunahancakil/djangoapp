@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
-    'django.template.loaders.app_directories.Loader',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
