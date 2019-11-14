@@ -12,7 +12,7 @@ class KurumlarAdmin(admin.ModelAdmin):
 
 @admin.register(Sorular)
 class Sorular(admin.ModelAdmin):
-    list_display = ['soru_baslik','soru_icerik','islem_tarihi']
+    list_display = ['id','soru_baslik','soru_icerik','islem_tarihi']
 
 @admin.register(Yoneticiler)
 class Yoneticiler(admin.ModelAdmin):
