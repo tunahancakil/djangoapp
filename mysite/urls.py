@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from home.views import home_view
 from anket.views import *
+from anketgonder.views import anket_gonder
 
 urlpatterns = [
     path('tema/index',index,name='index'),
@@ -25,5 +26,6 @@ urlpatterns = [
     path('tema/iletisim',head,name='iletisim'),
     path('', home_view, name='home'),
     path('admin/', admin.site.urls),
-    path('tema/anket',anket_form_view, name='anket_form') 
+    path('tema/anket',anket_form_view, name='anket_form'),
+    path('tema/iletisim',anket_gonder,name='anket_gonder'),
 ]

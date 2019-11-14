@@ -1,3 +1,5 @@
 from django.shortcuts import render
+from anketgonder.models import Anket
 
-# Create your views here.
+def anket_gonder(request):
+    return render(request,'index.html')

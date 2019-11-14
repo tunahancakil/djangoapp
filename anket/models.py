@@ -6,7 +6,7 @@ class Kurumlar(models.Model):
     unvan = models.CharField(max_length=250,verbose_name="İş Yeri Ünvanı")
     iletisim_no = models.CharField(max_length=10,verbose_name="İletişim No")
     email = models.EmailField(max_length=50)    
-    puan = models.IntegerField(editable=True)
+    puan = models.IntegerField(default=0)
     islem_tarihi = models.DateTimeField()
     kullanici_adi = models.CharField(max_length=50)
 
@@ -41,7 +41,7 @@ class Isciler(models.Model):
         ordering = ('id',)
 
     def __str__(self):
-        return "%s %s %s" % (self.ad,self.soyad,self.kurum.unvan)
+        return "%s %s" % (self.ad,self.soyad)
 
 
 class Sorular(models.Model):
@@ -51,3 +51,6 @@ class Sorular(models.Model):
     cevap = models.IntegerField(editable=True)
     islem_tarihi = models.DateTimeField(auto_now_add=True)
     kullanici_adi = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.soru_icerik
