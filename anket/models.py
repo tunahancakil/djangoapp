@@ -31,11 +31,8 @@ class Isciler(models.Model):
     email = models.EmailField(max_length=50)
     iletisim_no = models.CharField(max_length=10,verbose_name="İletişim No")
     yonetici = models.ManyToManyField(Yoneticiler)
+    kurum = models.ForeignKey(Kurumlar, on_delete=models.CASCADE)
     islem_tarihi = models.DateField()
-
-    
-    def __str__(self):
-        return self.ad
 
     class Meta:
         ordering = ('id',)
