@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from home.views import home_view
 from anket.views import *
-from anketgonder.views import anket_gonder
+from anketgonder.views import *
 
 urlpatterns = [
     path('tema/index',index,name='index'),
@@ -27,16 +27,6 @@ urlpatterns = [
     path('', home_view, name='home'),
     path('admin/', admin.site.urls),
     path('tema/anket',anket_form_view, name='anket_form'),
-    path('admin/anketgonder/siparis/send.php?',anket_gonder, name="sendmail")
+    path('email', email, name='email'),
+    path('thanks', thanks, name='thanks'),
 ]
-urlpatterns = patterns(
-    '',
-    url(r'^email/$',
-        views.email,
-        name='email'
-        ),
-    url(r'^thanks/$',
-        views.thanks,
-        name='thanks'
-        ),
-)
