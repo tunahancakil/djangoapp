@@ -27,4 +27,16 @@ urlpatterns = [
     path('', home_view, name='home'),
     path('admin/', admin.site.urls),
     path('tema/anket',anket_form_view, name='anket_form'),
+    path('admin/anketgonder/siparis/send.php?',anket_gonder, name="sendmail")
 ]
+urlpatterns = patterns(
+    '',
+    url(r'^email/$',
+        views.email,
+        name='email'
+        ),
+    url(r'^thanks/$',
+        views.thanks,
+        name='thanks'
+        ),
+)

@@ -4,12 +4,19 @@ from .models import *
 
 @admin.register(Anket)
 class AnketGonderAdmin(admin.ModelAdmin):
-    def button(self,event=None):
+    def smsbutton(self,event=None):
         return format_html(
-            '<div class="submit-rov"><a href="http://okandiyebiri.com"><input type="submit" value="Gönder" /></a></div>'
+            '<div class="submit-rov"><form action="">'
+            '<input type="submit" value="Submit">'
+            '</form></div>'
         ) 
-
-    list_display = ['anket_adi','islem_tarihi','kullanici_adi','button']
+    def emailbutton(self,event=None):
+        return format_html(
+            '<div class="submit-rov"><form action="/action_page.php">'
+            '<input type="submit" value="Submit">'
+            '</form></div>'
+        )
+    list_display = ['anket_adi','islem_tarihi','kullanici_adi','smsbutton','emailbutton']
     list_filter = ['islem_tarihi']
 
     
