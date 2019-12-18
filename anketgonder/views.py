@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from anketgonder.models import Anket
 from django.core.mail import send_mail, BadHeaderError
 from django.http import HttpResponse, HttpResponseRedirect
