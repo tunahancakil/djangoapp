@@ -6,7 +6,7 @@ from .models import *
 class AnketGonderAdmin(admin.ModelAdmin):
     def smsbutton(self,event=None):
         return format_html(
-            '<div class="submit-rov"><form action="mail.py">'
+            '<div class="submit-rov"><form action="/mail.py">'
             '<input type="submit" value="Submit">'
             '</form></div>'
         ) 
