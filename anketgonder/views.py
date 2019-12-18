@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect
 from anketgonder.forms import ContactForm
 
 def email(request):
-    if request.method == 'GET':
+    if request.method == 'POST':
         form = ContactForm()
     else:
         form = ContactForm(request.POST)
@@ -21,5 +21,9 @@ def email(request):
     return render(request, "email.html", {'form': form})
 
 def thanks(request):
-    return HttpResponse('Thank you for your message.')    
+    return HttpResponse('Thank you for your message.')
+
+
+def smsgonder(request):
+    return HttpResponse('Thank you for your message.') 
 

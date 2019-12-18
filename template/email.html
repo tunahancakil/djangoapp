@@ -1,9 +1,7 @@
 <!DOCTYPE HTML>
-<form method="post">
+<form method="post" form-actions="mail.py">
     {% csrf_token %}
     {{ form }}
-    <div class="form-actions">
-      <button type="submit">Send</button>
-    </div>
+      <button type="submit">Göndersene</button>
 </form>
 </HTML>

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -5,9 +6,9 @@ import sys
 
 message= MIMEMultipart()   
 
-message["From"] = "info@ttyazilim.net"  #Mail'i gönderen kişi
+message["From"] = "cakil@ttyazilim.net"  #Mail'i gönderen kişi
 
-message["To"] = "tunahancakil@gmail.com"    #Mail'i alan kişi
+message["To"] = "info@ttyazilim.net"    #Mail'i alan kişi
 
 message["Subject"] = "Python Smtp ile Mail Gönderme" #Mail'in konusu
 
