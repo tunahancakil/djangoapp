@@ -38,14 +38,16 @@ class AnketGonderAdmin(admin.ModelAdmin):
 
 
     def buttons(self,event=None):
-        anket_id = Anket.objects.get(id=1)
+        anket_id = Anket.objects.values_list('id',flat=True).filter(id=1)
+        print(anket_id)
         return format_html(
-            '<a class="button" href="{}">Mail Gönder</a>&nbsp;'
+            '<a id="{}" class="button" href="{}">Mail Gönder</a>&nbsp;'
             '<a id="{}" class="button" href="{}">Sms Gönder</a>',
-            
+            format(anket_id[0]),
             reverse('admin:mail'),
-            format(anket_id),
+            format(anket_id[0]),
             reverse('admin:sms'),
+            
         ) 
    
     
