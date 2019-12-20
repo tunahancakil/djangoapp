@@ -7,7 +7,7 @@ class ContactForm(forms.Form):
     from_email = forms.EmailField(required=True)
     subject = forms.CharField(required=True)
     message = forms.CharField(widget=forms.Textarea)
-    url = 'http://sms.corvass.net/json'
+    url = 'http://sms.corvass.net/jsona'
     myobj = {"Authentication": {           
              "apikey": "4775500361",           
              "apisecret": "0n6hu04dyiz23xyh9m6m"       },

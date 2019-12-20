@@ -32,7 +32,7 @@ class Isciler(models.Model):
     iletisim_no = models.CharField(max_length=10,verbose_name="İletişim No")
     yonetici = models.ManyToManyField(Yoneticiler)
     kurum = models.ForeignKey(Kurumlar, on_delete=models.CASCADE)
-    islem_tarihi = models.DateField()
+    islem_tarihi = models.DateField(auto_now_add=True)
 
     class Meta:
         ordering = ('id',)
@@ -47,7 +47,7 @@ class Sorular(models.Model):
     soru_icerik = models.TextField(verbose_name="Soru İçerik")
     cevap = models.IntegerField(editable=True)
     islem_tarihi = models.DateTimeField(auto_now_add=True)
-    kullanici_adi = models.CharField(max_length=50)
+    kullanici_adi = models.CharField("auth.user",max_length=50)
 
     def __str__(self):
         return self.soru_icerik

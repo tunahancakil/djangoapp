@@ -7,21 +7,25 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import sys
 from django.http import HttpResponse
-
+from django import forms
+import json
+import requests
+import urllib
 
 @admin.register(Anket)
 class AnketGonderAdmin(admin.ModelAdmin):
+    class Meta:
+        model = Anket
 
     list_display = ['id','anket_adi','islem_tarihi','kullanici_adi','buttons']
     list_filter = ['islem_tarihi']
-    anket_id = Anket.objects.all()
 
     def get_urls(self):
         urls = super().get_urls()
         custom_urls = [
             path(
                 'email_success/',
-                self.process_sms,
+                self.process_mail,
                 name='mail',
             ),
             path(
@@ -34,25 +38,27 @@ class AnketGonderAdmin(admin.ModelAdmin):
 
 
     def buttons(self,event=None):
+        anket_id = Anket.objects.get(id=1)
         return format_html(
             '<a class="button" href="{}">Mail Gönder</a>&nbsp;'
-            '<a class="button" href="{}">Sms Gönder</a>',
+            '<a id="{}" class="button" href="{}">Sms Gönder</a>',
+            
             reverse('admin:mail'),
+            format(anket_id),
             reverse('admin:sms'),
         ) 
    
     
 
-    def process_sms(self, request,*args, **kwargs):
+    def process_mail(self, request,*args, **kwargs):
+        anket_id = Anket.objects.get(id=1)
         message= MIMEMultipart()   
         message["From"] = "info@ttyazilim.net"  #Mail'i gönderen kişi
         message["To"] = "tunahancakil@gmail.com"    #Mail'i alan kişi
         message["Subject"] = "Python Smtp ile Mail Gönderme" #Mail'in konusu
-        body= """
-
-        Python üzerinde smtp modülü
-        kullanarak mail gönderiyorum.
-        """   #Mail içerisinde yazacak içerik
+        body= "{}Python üzerinde smtp modülü kullanarak mail gönderiyorum.".format(anket_id)
+        #Mail içerisinde yazacak içerik
+        print(body)
         body_text = MIMEText(body,"plain") #
         message.attach(body_text)
         #Gmail serverlerine bağlanma işlemi.
@@ -66,4 +72,21 @@ class AnketGonderAdmin(admin.ModelAdmin):
         finally:
             print('quit')
             server.quit()
-        return HttpResponse('Thanks')
+        return HttpResponse('Email gönderimi başarılı!')
+
+
+
+    def process_sms(self, request,*args, **kwargs):
+    
+        url = 'http://sms.corvass.net/json'
+        myobj = {"Authentication": {           
+             "apikey": "4775500361",           
+             "apisecret": "0n6hu04dyiz23xyh9m6m"       },
+             "message": "Benipuanla.net anket linkinize tıklayarak puanlamaya başlayabilirsiniz.",
+             "msisdnArray": ["5318985507", "05393239896", "905455860993","05554861373"],
+             "originator": "TUNAHNCAKIL",
+             "senddate": "",       
+             "tags": ["deneme", "tayfun", "tunahan", "MERT"],
+             "description": ""}
+        x = requests.post(url, data = json.dumps(myobj))
+        return HttpResponse('Sms gönderimi başarılı!')

@@ -26,4 +26,3 @@ def thanks(request):
 
 def smsgonder(request):
     return HttpResponse('Thank you for your message.') 
-
