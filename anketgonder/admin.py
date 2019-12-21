@@ -12,6 +12,7 @@ from django import forms
 import json
 import requests
 import urllib
+from django.db.models import Count
 
 @admin.register(Anket)
 class AnketGonderAdmin(admin.ModelAdmin):
@@ -49,7 +50,6 @@ class AnketGonderAdmin(admin.ModelAdmin):
 
 
     def buttons(self,obj):
-        print(obj)
         return format_html(
             '<a id="{}" class="button" href="{}">Mail Gönder</a>&nbsp;'
             '<a id="{}" class="button" href="{}">Sms Gönder</a>',
@@ -58,33 +58,41 @@ class AnketGonderAdmin(admin.ModelAdmin):
             obj.id,
             reverse('admin:sms')
         ) 
-   
-    
 
-    def process_mail(self, request,*args, **kwargs):
-        message= MIMEMultipart()  
-        message["From"] = "info@ttyazilim.net"  #Mail'i gönderen kişi
-        message["To"] = "tunahancakil@gmail.com"    #Mail'i alan kişi
-        message["Subject"] = "Python Smtp ile Mail Gönderme" #Mail'in konusu
-        body= "{}Python üzerinde smtp modülü kullanarak mail gönderiyorum."
-        #Mail içerisinde yazacak içerik
-        print(body)
-        body_text = MIMEText(body,"plain") #
-        message.attach(body_text)
-        #Gmail serverlerine bağlanma işlemi.
-        print('here1')
-        server = smtplib.SMTP()  
-        server.connect("smtp.ttyazilim.net",587)
-        print('here2')
-        server.login("info@ttyazilim.net","Tolgahan123+")
-        try:
-            server.sendmail(message["From"],message["To"],message.as_string())
-        finally:
-            print('quit')
-            server.quit()
+    def process_mail(self, request,*args, **kwargs):    
+        #a = Anket.objects.extra(select={'entry_count': 'SELECT email FROM anket_isciler WHERE anket_isciler.id = anketgonder_anket_anket_isci_id.isciler_id'},)
+        #b = a.email
+        #print(a)
+        #c = Isciler.objects.values_list('email').filter(a.get(1))
+        #print(c)
+        #a = Anket.objects.values('anket_isci_id').filter(id=2)
+        a = Anket.objects.get(id=4)
+        #b = a.anket_isci_id.values_list('email',flat=True)
+        #c = b.get()
+
+        for e in a.anket_isci_id.all():
+            print(e.email)
+            #d = self.get_queryset(request).filter(name=b.email).exclude(pk=a.id)
+            #print(a)
+            message= MIMEMultipart()
+            message["From"] = "info@ttyazilim.net"  #Mail'i gönderen kişi
+            message["To"] = "{}".format(e.email)  #Mail'i alan kişi
+            message["Subject"] = "Python Smtp ile Mail Gönderme" #Mail'in konusu
+            body= "{}Python üzerinde smtp modülü kullanarak mail gönderiyorum.".format(a.mail_mesaj)
+            #Mail içerisinde yazacak içerik
+            body_text = MIMEText(body,"plain") #
+            message.attach(body_text)
+            #Gmail serverlerine bağlanma işlemi.
+            server = smtplib.SMTP()  
+            server.connect("smtp.ttyazilim.net",587)
+            server.login("info@ttyazilim.net","Tolgahan123+")
+            try:
+                server.sendmail(message["From"],message["To"],message.as_string())
+            finally:
+                print('quit')
+                server.quit()
+            
         return HttpResponse('Email gönderimi başarılı!')
-
-
 
     def process_sms(self, request,*args, **kwargs):
     
@@ -93,7 +101,7 @@ class AnketGonderAdmin(admin.ModelAdmin):
              "apikey": "4775500361",           
              "apisecret": "0n6hu04dyiz23xyh9m6m"       },
              "message": "Benipuanla.net anket linkinize tıklayarak puanlamaya başlayabilirsiniz.",
-             "msisdnArray": ["5318985507", "05393239896", "905455860993","05554861373"],
+             "msisdnArray": ["5318985507", "05393239896", "905455860993"],
              "originator": "TUNAHNCAKIL",
              "senddate": "",       
              "tags": ["deneme", "tayfun", "tunahan", "MERT"],

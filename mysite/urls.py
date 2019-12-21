@@ -27,6 +27,5 @@ urlpatterns = [
     path('', home_view, name='home'),
     path('admin/', admin.site.urls),
     path('tema/anket',anket_form_view, name='anket_form'),
-    path('email', email, name='email'),
     path('thanks', thanks, name='thanks'),
 ]

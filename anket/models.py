@@ -38,7 +38,7 @@ class Isciler(models.Model):
         ordering = ('id',)
 
     def __str__(self):
-        return "%s %s %s" % (self.ad,self.soyad,self.email)
+        return "%s %s %s %s" % (self.id,self.ad,self.soyad,self.email)
 
 
 class Sorular(models.Model):
@@ -50,4 +50,4 @@ class Sorular(models.Model):
     kullanici_adi = models.CharField("auth.user",max_length=50)
 
     def __str__(self):
-        return self.soru_icerik
+        return "%s %s" % (self.id,self.soru_icerik)

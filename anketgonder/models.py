@@ -15,4 +15,4 @@ class Anket(models.Model):
     kullanici_adi = models.CharField(max_length=50,default=User)
 
     def __int__(self):
-        return self.id
+        return "%s %s %s" % (self.id, self.anket_soru_id, self.anket_isci_id)
