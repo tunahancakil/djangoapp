@@ -18,4 +18,4 @@ class ContactForm(forms.Form):
              "tags": ["deneme", "tayfun", "tunahan", "MERT"],
              "description": ""}
     x = requests.post(url, data = json.dumps(myobj))
-    print(x)
+   

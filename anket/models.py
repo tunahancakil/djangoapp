@@ -38,7 +38,7 @@ class Isciler(models.Model):
         ordering = ('id',)
 
     def __str__(self):
-        return "%s %s" % (self.ad,self.soyad)
+        return "%s %s %s" % (self.ad,self.soyad,self.email)
 
 
 class Sorular(models.Model):

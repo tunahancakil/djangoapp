@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.utils.html import format_html
 from .models import *
+from anket.models import *
 from django.urls import reverse,path
 import smtplib
 from email.mime.multipart import MIMEMultipart
@@ -17,9 +18,19 @@ class AnketGonderAdmin(admin.ModelAdmin):
     class Meta:
         model = Anket
 
+    change_form_template = "button.html"    
+
     list_display = ['id','anket_adi','islem_tarihi','kullanici_adi','buttons']
     list_filter = ['islem_tarihi']
 
+    def response_change(self, request, obj):
+        if "_make-unique" in request.POST:
+            matching_names_except_this = self.get_queryset(request).filter(name=obj.name).exclude(pk=obj.id)
+            print(obj.anket_isci_id)
+            return HttpResponseRedirect(".")
+        return super().response_change(request, obj)     
+    
+    
     def get_urls(self):
         urls = super().get_urls()
         custom_urls = [
@@ -37,28 +48,25 @@ class AnketGonderAdmin(admin.ModelAdmin):
         return custom_urls + urls
 
 
-    def buttons(self,event=None):
-        anket_id = Anket.objects.values_list('id',flat=True).filter(id=1)
-        print(anket_id)
+    def buttons(self,obj):
+        print(obj)
         return format_html(
             '<a id="{}" class="button" href="{}">Mail Gönder</a>&nbsp;'
             '<a id="{}" class="button" href="{}">Sms Gönder</a>',
-            format(anket_id[0]),
+            obj.id,
             reverse('admin:mail'),
-            format(anket_id[0]),
-            reverse('admin:sms'),
-            
+            obj.id,
+            reverse('admin:sms')
         ) 
    
     
 
     def process_mail(self, request,*args, **kwargs):
-        anket_id = Anket.objects.get(id=1)
-        message= MIMEMultipart()   
+        message= MIMEMultipart()  
         message["From"] = "info@ttyazilim.net"  #Mail'i gönderen kişi
         message["To"] = "tunahancakil@gmail.com"    #Mail'i alan kişi
         message["Subject"] = "Python Smtp ile Mail Gönderme" #Mail'in konusu
-        body= "{}Python üzerinde smtp modülü kullanarak mail gönderiyorum.".format(anket_id)
+        body= "{}Python üzerinde smtp modülü kullanarak mail gönderiyorum."
         #Mail içerisinde yazacak içerik
         print(body)
         body_text = MIMEText(body,"plain") #
