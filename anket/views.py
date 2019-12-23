@@ -2,6 +2,7 @@ from django.shortcuts import render
 from . import forms
 from anket.models import Sorular
 from anket.forms import AnketForm
+from anketgonder.models import Anket
 
 def index(request):
     return render(request,'anket-tema/index.html')
@@ -17,13 +18,5 @@ def base(request):
     return render(request,'anket-tema/base.html')
 
 def anket_form_view(request):
-    form = AnketForm()
-    sorularim = Sorular.objects.all()
-    if request.method == "POST":
-        form = AnketForm(request.POST)
-        if form.is_valid():
-            form.save(commit=True)
-            return index(request)
-        else:
-            print ('Hata form geçerli bilgiler içermiyor.')
-    return render(request,'anket-tema/anket.html',{'form':form,'sorularim' : sorularim})
+    a = Anket.objects.get(id=4)                
+    return render(request,'anket-tema/anket.html',{'sorularim' : a.anket_soru_id.all()})

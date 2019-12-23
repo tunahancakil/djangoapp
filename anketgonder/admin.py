@@ -12,7 +12,6 @@ from django import forms
 import json
 import requests
 import urllib
-from django.db.models import Count
 
 @admin.register(Anket)
 class AnketGonderAdmin(admin.ModelAdmin):
@@ -32,16 +31,16 @@ class AnketGonderAdmin(admin.ModelAdmin):
         return super().response_change(request, obj)     
     
     
-    def get_urls(self):
+    def  get_urls(self):
         urls = super().get_urls()
         custom_urls = [
             path(
-                'email_success/',
+                'email_success/<int:element_id>',
                 self.process_mail,
                 name='mail',
             ),
             path(
-                'sms_success/',
+                'sms_success/<int:element_id>',
                 self.process_sms,
                 name='sms',
             ),
@@ -50,30 +49,20 @@ class AnketGonderAdmin(admin.ModelAdmin):
 
 
     def buttons(self,obj):
+      
         return format_html(
-            '<a id="{}" class="button" href="{}">Mail Gönder</a>&nbsp;'
-            '<a id="{}" class="button" href="{}">Sms Gönder</a>',
+            '<a id="{}" class="button" name="emailbutton" href="{}">Mail Gönder</a>&nbsp;'
+            '<a id="{}" class="button" name="smsbutton" href="{}">Sms Gönder</a>',
             obj.id,
-            reverse('admin:mail'),
+            reverse('admin:mail',args=[obj.id]),
             obj.id,
-            reverse('admin:sms')
+            reverse('admin:sms',args=[obj.id])
         ) 
 
-    def process_mail(self, request,*args, **kwargs):    
-        #a = Anket.objects.extra(select={'entry_count': 'SELECT email FROM anket_isciler WHERE anket_isciler.id = anketgonder_anket_anket_isci_id.isciler_id'},)
-        #b = a.email
-        #print(a)
-        #c = Isciler.objects.values_list('email').filter(a.get(1))
-        #print(c)
-        #a = Anket.objects.values('anket_isci_id').filter(id=2)
-        a = Anket.objects.get(id=4)
-        #b = a.anket_isci_id.values_list('email',flat=True)
-        #c = b.get()
-
+    def process_mail(self, request, element_id):
+        a = Anket.objects.get(id=element_id)
         for e in a.anket_isci_id.all():
             print(e.email)
-            #d = self.get_queryset(request).filter(name=b.email).exclude(pk=a.id)
-            #print(a)
             message= MIMEMultipart()
             message["From"] = "info@ttyazilim.net"  #Mail'i gönderen kişi
             message["To"] = "{}".format(e.email)  #Mail'i alan kişi
@@ -82,7 +71,6 @@ class AnketGonderAdmin(admin.ModelAdmin):
             #Mail içerisinde yazacak içerik
             body_text = MIMEText(body,"plain") #
             message.attach(body_text)
-            #Gmail serverlerine bağlanma işlemi.
             server = smtplib.SMTP()  
             server.connect("smtp.ttyazilim.net",587)
             server.login("info@ttyazilim.net","Tolgahan123+")
@@ -92,19 +80,21 @@ class AnketGonderAdmin(admin.ModelAdmin):
                 print('quit')
                 server.quit()
             
-        return HttpResponse('Email gönderimi başarılı!')
+        return HttpResponse('Email gönderimi başarılı!{}'.format(id))
 
-    def process_sms(self, request,*args, **kwargs):
-    
-        url = 'http://sms.corvass.net/json'
-        myobj = {"Authentication": {           
-             "apikey": "4775500361",           
-             "apisecret": "0n6hu04dyiz23xyh9m6m"       },
-             "message": "Benipuanla.net anket linkinize tıklayarak puanlamaya başlayabilirsiniz.",
-             "msisdnArray": ["5318985507", "05393239896", "905455860993"],
-             "originator": "TUNAHNCAKIL",
-             "senddate": "",       
-             "tags": ["deneme", "tayfun", "tunahan", "MERT"],
-             "description": ""}
-        x = requests.post(url, data = json.dumps(myobj))
+    def process_sms(self, request, element_id):
+        a = Anket.objects.get(id=element_id)
+        for e in a.anket_isci_id.all():
+            print(e.iletisim_no)
+            url = 'http://sms.corvass.net/json'
+            myobj = {"Authentication": {           
+                "apikey": "4775500361",           
+                "apisecret": "0n6hu04dyiz23xyh9m6m"       },
+                "message": "Deneme SMS",
+                "msisdnArray": [e.iletisim_no],
+                "originator": "TUNAHNCAKIL",
+                "senddate": "",       
+                "tags": ["Benipuanla.net"],
+                "description": ""}
+            x = requests.post(url, data = json.dumps(myobj))
         return HttpResponse('Sms gönderimi başarılı!')
