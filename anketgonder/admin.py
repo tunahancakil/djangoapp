@@ -12,6 +12,7 @@ from django import forms
 import json
 import requests
 import urllib
+import jwt
 
 @admin.register(Anket)
 class AnketGonderAdmin(admin.ModelAdmin):
@@ -61,13 +62,17 @@ class AnketGonderAdmin(admin.ModelAdmin):
 
     def process_mail(self, request, element_id):
         a = Anket.objects.get(id=element_id)
+        key = 'secret'
         for e in a.anket_isci_id.all():
             print(e.email)
+            encoded = jwt.encode({'isci_id': e.id}, key, algorithm='HS256')
+            print('www.benipuanla.net/tema/anket/' + str(encoded))
             message= MIMEMultipart()
             message["From"] = "info@ttyazilim.net"  #Mail'i gönderen kişi
             message["To"] = "{}".format(e.email)  #Mail'i alan kişi
-            message["Subject"] = "Python Smtp ile Mail Gönderme" #Mail'in konusu
-            body= "{}Python üzerinde smtp modülü kullanarak mail gönderiyorum.".format(a.mail_mesaj)
+            message["Subject"] = "Benipuanla.net - Anket" #Mail'in konusu
+            body= "Mail içerik{}.{}".format(a.mail_mesaj,encoded)
+            #decoded = jwt.decode(encoded, key, algorithms='HS256')
             #Mail içerisinde yazacak içerik
             body_text = MIMEText(body,"plain") #
             message.attach(body_text)
@@ -98,3 +103,5 @@ class AnketGonderAdmin(admin.ModelAdmin):
                 "description": ""}
             x = requests.post(url, data = json.dumps(myobj))
         return HttpResponse('Sms gönderimi başarılı!')
+
+

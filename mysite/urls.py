@@ -26,6 +26,6 @@ urlpatterns = [
     path('tema/iletisim',head,name='iletisim'),
     path('', home_view, name='home'),
     path('admin/', admin.site.urls),
-    path('tema/anket',anket_form_view, name='anket_form'),
+    path('tema/anket/<str:encoded>',anket_form_view, name='anket_form'),
     path('thanks', thanks, name='thanks'),
 ]
