@@ -14,6 +14,7 @@ import requests
 import urllib
 import jwt
 
+
 @admin.register(Anket)
 class AnketGonderAdmin(admin.ModelAdmin):
     class Meta:
