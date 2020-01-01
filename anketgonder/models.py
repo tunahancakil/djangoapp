@@ -16,3 +16,13 @@ class Anket(models.Model):
 
     def __int__(self):
         return "%s %s %s" % (self.id, self.anket_soru_id, self.anket_isci_id)
+
+class Cevaplar(models.Model):
+    id = models.AutoField(primary_key=True)
+    deger = forms.ChoiceField(widget=forms.RadioSelect)
+    anket_soru_id = models.ForeignKey(Sorular, on_delete=models.CASCADE)
+    anket_isci_id = models.ForeignKey(Isciler, on_delete=models.CASCADE)
+    islem_tarihi = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return "%s %s %s %s"  % (self.id,self.deger,self.anket_soru_id, self.anket_isci_id)

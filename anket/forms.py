@@ -1,8 +1,9 @@
 from django import forms
-from django.forms import ModelForm
-from anket.models import Sorular
+from anketgonder.models import Anket,Cevaplar
 
-class AnketForm(forms.ModelForm):
-    class Meta():
-        model = Sorular
-        fields = ('soru_icerik',)
+class AnketForm(forms.Form):
+
+    def __init__(self, sorular, *args, **kwargs):
+        super(AnketForm, self).__init__(*args, **kwargs)
+        for soru in sorular:
+            self.fields["%s" % soru] = forms.ChoiceField(required=True,widget=forms.RadioSelect(),choices=[('1','Çok Kötü'),('2','Kötü'),('3','Orta'),('4','İyi'),('5','Çok İyi')])
