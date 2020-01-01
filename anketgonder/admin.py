@@ -72,7 +72,7 @@ class AnketGonderAdmin(admin.ModelAdmin):
             message["From"] = "info@ttyazilim.net"  #Mail'i gönderen kişi
             message["To"] = "{}".format(e.email)  #Mail'i alan kişi
             message["Subject"] = "Benipuanla.net - Anket" #Mail'in konusu
-            body= "Mail içerik{}.{}".format(a.mail_mesaj,encoded)
+            body= "Mail içerik{}.www.benipuanla.net/tema/anket/{}".format(a.mail_mesaj,encoded)
             #decoded = jwt.decode(encoded, key, algorithms='HS256')
             #Mail içerisinde yazacak içerik
             body_text = MIMEText(body,"plain") #
