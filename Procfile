@@ -1,2 +1,2 @@
-release: pip install -r requirement.txt
+release: pip install -r ./requirement.txt
 web: python manage.py runserver 0.0.0.0:$PORT
