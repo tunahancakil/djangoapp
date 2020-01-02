@@ -3,7 +3,7 @@ from . import forms
 from anket.models import Sorular
 from anket.forms import AnketForm
 from anketgonder.models import Anket,Cevaplar
-
+from django.http import HttpResponse, HttpResponseRedirect
 import jwt
 
 def index(request):
@@ -23,17 +23,14 @@ def anket_form_view(request,encoded):
     
     if request.method == 'POST':
         print('here')
-        # create a form instance and populate it with data from the request:
         form = AnketForm(request.POST)
-        # check whether it's valid:
+        #Cevaplar.deger = form.fields
+        
+        print(form.fields.values)
         if form.is_valid():
-            # process the data in form.cleaned_data as required
-            # ...
-            # redirect to a new URL:
             print(form.cleaned_data['Soru'])
-            return HttpResponseRedirect('/thanks/')
-
-    # if a GET (or any other method) we'll create a blank form
+            AnketForm.save()
+        return HttpResponseRedirect('/thanks')
     else:
         key = 'secret'
         decoded = jwt.decode(encoded, key, 'utf-8') 

@@ -13,7 +13,7 @@ import json
 import requests
 import urllib
 import jwt
-
+from  bitly_api import bitly_api
 
 @admin.register(Anket)
 class AnketGonderAdmin(admin.ModelAdmin):
@@ -68,11 +68,14 @@ class AnketGonderAdmin(admin.ModelAdmin):
             print(e.email)
             encoded = jwt.encode({'isci_id': e.id}, key, algorithm='HS256')
             print('www.benipuanla.net/tema/anket/' + str(encoded))
+            b = bitly_api.Connection(access_token="655c090ad60a21d1db57b9b66873783b7345e38a")
+            response_ = b.shorten('http://www.benipuanla.net/tema/anket/' + str(encoded))
+            print(response_)
             message= MIMEMultipart()
             message["From"] = "info@ttyazilim.net"  #Mail'i gönderen kişi
             message["To"] = "{}".format(e.email)  #Mail'i alan kişi
             message["Subject"] = "Benipuanla.net - Anket" #Mail'in konusu
-            body= "Mail içerik{}.www.benipuanla.net/tema/anket/{}".format(a.mail_mesaj,encoded)
+            body= "Mail içerik{}.{}".format(a.mail_mesaj,encoded)
             #decoded = jwt.decode(encoded, key, algorithms='HS256')
             #Mail içerisinde yazacak içerik
             body_text = MIMEText(body,"plain") #
