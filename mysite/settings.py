@@ -127,6 +127,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/dev/howto/static-files/
 
+EMAIL_HOST = "smtp.ttyazilim.net"
+
+EMAIL_PORT = 587
+
+EMAIL_HOST_USER = "info@ttyazilim.net"
+
+EMAIL_HOST_PASSWORD = "Tolgahan123+"
+
 STATIC_URL = '/static/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from . import forms
-from anket.models import Sorular
+from anket.models import Sorular,Isciler
 from anket.forms import AnketForm
 from anketgonder.models import Anket,Cevaplar
 from django.http import HttpResponse, HttpResponseRedirect
@@ -20,20 +20,21 @@ def base(request):
     return render(request,'anket-tema/base.html')
 
 def anket_form_view(request,encoded):
-    
     if request.method == 'POST':
         print('here')
-        form = AnketForm(request.POST)
-        #Cevaplar.deger = form.fields
-        
-        print(form.fields.values)
-        if form.is_valid():
-            print(form.cleaned_data['Soru'])
+        form_ = AnketForm(request.POST)
+        print(str(request.Post))
+    
+        if form_.is_valid():
+            print('here2')
+            print(form_.cleaned_data['Soru'])
             AnketForm.save()
-        return HttpResponseRedirect('/thanks')
+            return HttpResponseRedirect('/thanks')
     else:
         key = 'secret'
+        print(encoded)
         decoded = jwt.decode(encoded, key, 'utf-8') 
+        print(decoded)
         a = Anket.objects.get(id=decoded['isci_id'])
         form = AnketForm(a.anket_soru_id.all())
         return render(request,'anket-tema/anket.html',{'form':form})

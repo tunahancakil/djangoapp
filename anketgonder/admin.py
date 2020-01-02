@@ -1,5 +1,7 @@
 from django.contrib import admin
+from django.template import loader
 from django.utils.html import format_html
+from django.core.mail import send_mail
 from .models import *
 from anket.models import *
 from django.urls import reverse,path
@@ -67,39 +69,31 @@ class AnketGonderAdmin(admin.ModelAdmin):
         for e in a.anket_isci_id.all():
             print(e.email)
             encoded = jwt.encode({'isci_id': e.id}, key, algorithm='HS256')
-            print('www.benipuanla.net/tema/anket/' + str(encoded))
-            b = bitly_api.Connection(access_token="655c090ad60a21d1db57b9b66873783b7345e38a")
-            response_ = b.shorten('http://www.benipuanla.net/tema/anket/' + str(encoded))
-            print(response_)
             message= MIMEMultipart()
             message["From"] = "info@ttyazilim.net"  #Mail'i gönderen kişi
             message["To"] = "{}".format(e.email)  #Mail'i alan kişi
             message["Subject"] = "Benipuanla.net - Anket" #Mail'in konusu
-            body= "Mail içerik{}.{}".format(a.mail_mesaj,encoded)
-            #decoded = jwt.decode(encoded, key, algorithms='HS256')
-            #Mail içerisinde yazacak içerik
-            body_text = MIMEText(body,"plain") #
-            message.attach(body_text)
-            server = smtplib.SMTP()  
-            server.connect("smtp.ttyazilim.net",587)
-            server.login("info@ttyazilim.net","Tolgahan123+")
+            body = loader.render_to_string('email.html ',{'link': 'http://www.benipuanla.net/tema/anket/' + str(encoded)[2:-1]})
             try:
-                server.sendmail(message["From"],message["To"],message.as_string())
+                send_mail(message['Subject'],"",message["From"],[message["To"]],html_message=body)
             finally:
                 print('quit')
-                server.quit()
-            
         return HttpResponse('Email gönderimi başarılı!{}'.format(id))
 
     def process_sms(self, request, element_id):
         a = Anket.objects.get(id=element_id)
+        key = 'secret'
         for e in a.anket_isci_id.all():
-            print(e.iletisim_no)
-            url = 'http://sms.corvass.net/json'
+            encoded = jwt.encode({'isci_id': e.id}, key, algorithm='HS256')
+            b = bitly_api.Connection(access_token="655c090ad60a21d1db57b9b66873783b7345e38a")
+            response_ = b.shorten('http://www.benipuanla.net/tema/anket/' + str(encoded)[2:-1])
+            print(response_.get('url'))
+            response_url = str(response_.get('url'))
+            url = 'http://sms.corvass.net/jsona'
             myobj = {"Authentication": {           
                 "apikey": "4775500361",           
                 "apisecret": "0n6hu04dyiz23xyh9m6m"       },
-                "message": "Deneme SMS",
+                "message": "TIKLATINIZ. {}".format(response_url),
                 "msisdnArray": [e.iletisim_no],
                 "originator": "TUNAHNCAKIL",
                 "senddate": "",       
