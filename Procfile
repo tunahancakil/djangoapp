@@ -1,3 +1,2 @@
-release: python manage.py migrate
-release: pip install requirement.txt
+release: pip install --upgrade pip
 web: python manage.py runserver 0.0.0.0:$PORT
