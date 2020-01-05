@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from anket.models import *
 from django.contrib import admin
+from django.forms import ModelForm
 
 
 class Anket(models.Model):
@@ -17,12 +18,22 @@ class Anket(models.Model):
     def __int__(self):
         return "%s %s %s" % (self.id, self.anket_soru_id, self.anket_isci_id)
 
+
+
 class Cevaplar(models.Model):
+    DEGER_CHOICES = [
+        (1,'Çok Kötü'),
+        (2,'Kötü'),
+        (3,'Orta'),
+        (4,'İyi'),
+        (5,'Çok İyi'),
+    ] 
     id = models.AutoField(primary_key=True)
-    deger = forms.ChoiceField(widget=forms.RadioSelect)
+    #deger = forms.ChoiceField(widget=forms.RadioSelect)
+    deger = models.IntegerField(choices=DEGER_CHOICES,default=None)
     anket_soru_id = models.ForeignKey(Sorular, on_delete=models.CASCADE)
     anket_isci_id = models.ForeignKey(Isciler, on_delete=models.CASCADE)
     islem_tarihi = models.DateTimeField(auto_now_add=True)
-    
+
     def __str__(self):
         return "%s %s %s %s"  % (self.id,self.deger,self.anket_soru_id, self.anket_isci_id)

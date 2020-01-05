@@ -1,9 +1,9 @@
-from django.shortcuts import render
-from . import forms
+from django.shortcuts import render,redirect
 from anket.models import Sorular,Isciler
 from anket.forms import AnketForm
 from anketgonder.models import Anket,Cevaplar
 from django.http import HttpResponse, HttpResponseRedirect
+from django.contrib.auth.models import User
 import jwt
 
 def index(request):
@@ -20,7 +20,29 @@ def base(request):
     return render(request,'anket-tema/base.html')
 
 def anket_form_view(request,encoded):
-    if request.method == 'POST':
+    if request.method == "POST":
+        key = 'secret'
+        decoded = jwt.decode(encoded, key, 'utf-8') 
+        a = Anket.objects.get(id=decoded['isci_id'])
+        form_ = AnketForm(request.POST)
+        print(request.POST)
+        print("here1")
+        if form_.is_valid():
+            newLabel = form_.save()
+
+            return redirect("index")
+        context = {
+            "form" : form_
+        }
+        return render(request,"anket-tema/anket.html",context)
+    else:
+        form_ = AnketForm()
+        context = {
+            "form" : form_
+        }
+        return render(request,"anket-tema/anket.html",context)
+"""
+if request.method == 'POST':
         print('here')
         form_ = AnketForm(request.POST)
         print(str(request.Post))
@@ -38,4 +60,4 @@ def anket_form_view(request,encoded):
         a = Anket.objects.get(id=decoded['isci_id'])
         form = AnketForm(a.anket_soru_id.all())
         return render(request,'anket-tema/anket.html',{'form':form})
-  
+  """

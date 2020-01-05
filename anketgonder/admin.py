@@ -73,6 +73,7 @@ class AnketGonderAdmin(admin.ModelAdmin):
             message["From"] = "info@ttyazilim.net"  #Mail'i gönderen kişi
             message["To"] = "{}".format(e.email)  #Mail'i alan kişi
             message["Subject"] = "Benipuanla.net - Anket" #Mail'in konusu
+            print(str(encoded)[2:-1])
             body = loader.render_to_string('email.html ',{'link': 'http://www.benipuanla.net/tema/anket/' + str(encoded)[2:-1]})
             try:
                 send_mail(message['Subject'],"",message["From"],[message["To"]],html_message=body)
