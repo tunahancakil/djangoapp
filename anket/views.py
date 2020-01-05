@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from anket.models import Sorular,Isciler
 from anket.forms import AnketForm
+from anket.soruform import SorularForm
 from anketgonder.models import Anket,Cevaplar
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.models import User
@@ -20,14 +21,16 @@ def base(request):
     return render(request,'anket-tema/base.html')
 
 def anket_form_view(request,encoded):
+    key = 'secret'
+    decoded = jwt.decode(encoded, key, 'utf-8') 
+    a = Anket.objects.get(id=decoded['isci_id'])
+    anket_sorulari_id = a.anket_soru_id.all()
+    questions = a.anket_soru_id.all()
     if request.method == "POST":
-        key = 'secret'
-        decoded = jwt.decode(encoded, key, 'utf-8') 
-        a = Anket.objects.get(id=decoded['isci_id'])
-        form_ = AnketForm(request.POST)
-        print(request.POST)
         print("here1")
+        form_ = AnketForm(request.POST,extra=anket_sorulari_id)
         if form_.is_valid():
+
             newLabel = form_.save()
 
             return redirect("index")
@@ -36,7 +39,10 @@ def anket_form_view(request,encoded):
         }
         return render(request,"anket-tema/anket.html",context)
     else:
-        form_ = AnketForm()
+        print("here2")
+        print(a.anket_soru_id.all())
+        sorular = a.anket_soru_id.all()
+        form_ = AnketForm(sorular,initial={'anket_isci_id':a})
         context = {
             "form" : form_
         }

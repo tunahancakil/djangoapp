@@ -4,9 +4,8 @@ from .models import *
 class SorularForm(forms.ModelForm):
 
     class Meta:
-        model = Sorular,UyeKurumlar
+        model = Sorular
         fields = [
             'soru_baslik',
             'soru_icerik',
-            'cevap',
         ]

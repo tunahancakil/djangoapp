@@ -8,8 +8,24 @@
         <div class="row">
         <form method="POST">
             {% csrf_token %}
+           
             {{form.as_p}}
+            
+            
+             <!---
+            {% for field in form %}
+            <div class="fieldWrapper">
+            {{ field.errors }}
+            {{ field.label_tag }} 
+            {{ field }}
+            {{ field.values }}
+            {% if field.help_text %}
+            <p class="help">{{ field.help_text|safe }}</p>
+            {% endif %}
+            </div>
+            {% endfor %}
             <br>
+            -->
             <button type="submit" class="btn btn-danger"> Kaydet </button>
         </form>
              <!--
