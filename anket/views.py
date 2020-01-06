@@ -26,21 +26,28 @@ def anket_form_view(request,encoded):
     a = Anket.objects.get(id=decoded['isci_id'])
     anket_sorulari_id = a.anket_soru_id.all()
     if request.method == "POST":
-        print("here1")
-        form_ = AnketForm(instance=request.POST)
-        print(form_.values)
+        form_ = AnketForm(request.POST)
         if form_.is_valid():
             print("here-save")
-            print(kwargs)
-
-            newLabel = form_.save()
-
-            Cevaplar.objects.create(
-            deger = deger,    
-            anket_soru_id = anket_soru_id,    
-            anket_isci_id = anket_soru_id)
+            for soru in anket_sorulari_id :
+                print('soru')
+                print(str(soru.id))
+                print("cevap")
+                print(request.POST.get(str(soru.id),False))
+                c = Cevaplar.objects.create(
+                    deger = request.POST.get(str(soru.id),False),    
+                    anket_soru_id = Sorular.objects.filter(id=str(soru.id))[0],    
+                    anket_isci_id = Isciler.objects.filter(id=decoded['isci_id'])[0])
+                kaydet = c.save()
             return redirect("index")
       
+
+
+
+            
+
+
+
       
         context = {
             "form" : form_

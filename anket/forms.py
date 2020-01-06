@@ -8,11 +8,10 @@ class AnketForm(forms.Form):
     #anket_isci_id = forms.IntegerField()
     #anket_soru_icerik = forms.CharField()
 
-    def __init__(self, instance, *args, **kwargs):
+    def __init__(self,  *args, **kwargs):
         #if 'errormessage' in kwargs:
         #    print("yeah it's here")
         try:
-            print(instance)
             self.anket = kwargs.pop('anket')
         except:
             pass  
