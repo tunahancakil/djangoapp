@@ -29,7 +29,6 @@ class Cevaplar(models.Model):
         (5,'Çok İyi'),
     ] 
     id = models.AutoField(primary_key=True)
-    #deger = forms.ChoiceField(widget=forms.RadioSelect)
     deger = models.IntegerField(choices=DEGER_CHOICES,default=None)
     anket_soru_id = models.ForeignKey(Sorular, on_delete=models.CASCADE)
     anket_isci_id = models.ForeignKey(Isciler, on_delete=models.CASCADE)
@@ -37,3 +36,4 @@ class Cevaplar(models.Model):
 
     def __str__(self):
         return "%s %s %s %s"  % (self.id,self.deger,self.anket_soru_id, self.anket_isci_id)
+

@@ -7,40 +7,16 @@
         <div class="container-fluid">
         <div class="row">
         <form method="POST">
-            {% csrf_token %}
-           
-            {{form.as_p}}
-            
-            
-             <!---
-            {% for field in form %}
-            <div class="fieldWrapper">
-            {{ field.errors }}
-            {{ field.label_tag }} 
-            {{ field }}
-            {{ field.values }}
-            {% if field.help_text %}
-            <p class="help">{{ field.help_text|safe }}</p>
-            {% endif %}
-            </div>
+        {% for soru in form.anket.anket_soru_id.all %}
+        <h3>{{ soru.soru_icerik}}</h3>
+            {% for cevap in form.choices %}
+            <p><input type="radio" value={{cevap.0}}>{{cevap.1}}</input></p>
             {% endfor %}
-            <br>
-            -->
-            <button type="submit" class="btn btn-danger"> Kaydet </button>
+        {% endfor %}
+        <br>
+        <br>
+        <button type="submit" class="btn btn-danger"> Kaydet </button>
         </form>
-             <!--
-                {%block content%}
-                <form method="post" action="">
-             
-                {{ form.errors }}
-                {{ form.non_field_errors }}
-                {{form.as_p}}
-                 {% csrf_token %}
-                
-                <input type="submit" class="btn btn-primary" value="Submit">
-                </form>
-                {% endblock %}
-            -->
             </div>
         </div>        
 
