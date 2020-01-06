@@ -1,5 +1,11 @@
 {% include "anket-tema\head.html" %}
 {% load static %}
+
+<script>
+{{ prueba}}
+ console.log(ty);
+</script>
+
     <nav>
     <div class="col-sm-6" style="align:top;">
     </div>
@@ -9,9 +15,11 @@
         <form method="POST">
         {% for soru in form.anket.anket_soru_id.all %}
         <h3>{{ soru.soru_icerik}}</h3>
+            <fieldset>
             {% for cevap in form.choices %}
-            <p><input type="radio" value={{cevap.0}}>{{cevap.1}}</input></p>
+            <p><input type="radio" name={{soru.id}} value={{cevap.0}}>{{cevap.1}}</input></p>
             {% endfor %}
+            </fieldset>
         {% endfor %}
         <br>
         <br>

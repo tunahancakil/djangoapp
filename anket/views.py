@@ -27,17 +27,24 @@ def anket_form_view(request,encoded):
     anket_sorulari_id = a.anket_soru_id.all()
     if request.method == "POST":
         print("here1")
-        form_ = AnketForm(request.POST)
-        print(form_.non_field_errors)
-        print(form_.has_error)
+        form_ = AnketForm(instance=request.POST)
+        print(form_.values)
         if form_.is_valid():
             print("here-save")
+            print(kwargs)
+
             newLabel = form_.save()
 
+            Cevaplar.objects.create(
+            deger = deger,    
+            anket_soru_id = anket_soru_id,    
+            anket_isci_id = anket_soru_id)
             return redirect("index")
-        
+      
+      
         context = {
             "form" : form_
+           
         }
         return render(request,"anket-tema/anket.html",context)
     else:
@@ -51,7 +58,8 @@ def anket_form_view(request,encoded):
          #   pass
             #initial={'anket_isci_id':a.id,'anket_sorular':sorular}
         context = {
-            "form" : form_
+            "form" : form_,
+            "prueba" : "var ty = document.getElementById(1)"        
         }
         return render(request,"anket-tema/anket.html",context=context)
 """
