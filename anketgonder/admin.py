@@ -26,14 +26,6 @@ class AnketGonderAdmin(admin.ModelAdmin):
 
     list_display = ['id','anket_adi','islem_tarihi','kullanici_adi','buttons']
     list_filter = ['islem_tarihi']
-
-    def response_change(self, request, obj):
-        if "_make-unique" in request.POST:
-            matching_names_except_this = self.get_queryset(request).filter(name=obj.name).exclude(pk=obj.id)
-            print(obj.anket_isci_id)
-            return HttpResponseRedirect(".")
-        return super().response_change(request, obj)     
-    
     
     def  get_urls(self):
         urls = super().get_urls()
@@ -68,7 +60,7 @@ class AnketGonderAdmin(admin.ModelAdmin):
         key = 'secret'
         for e in a.anket_isci_id.all():
             print(e.email)
-            encoded = jwt.encode({'isci_id': e.id}, key, algorithm='HS256')
+            encoded = jwt.encode({'isci_id': e.id,'anket_id':element_id}, key, algorithm='HS256')
             message= MIMEMultipart()
             message["From"] = "info@ttyazilim.net"  #Mail'i gönderen kişi
             message["To"] = "{}".format(e.email)  #Mail'i alan kişi
@@ -85,7 +77,7 @@ class AnketGonderAdmin(admin.ModelAdmin):
         a = Anket.objects.get(id=element_id)
         key = 'secret'
         for e in a.anket_isci_id.all():
-            encoded = jwt.encode({'isci_id': e.id}, key, algorithm='HS256')
+            encoded = jwt.encode({'isci_id': e.id,'anket_id':element_id}, key, algorithm='HS256')
             b = bitly_api.Connection(access_token="655c090ad60a21d1db57b9b66873783b7345e38a")
             response_ = b.shorten('http://www.benipuanla.net/tema/anket/' + str(encoded)[2:-1])
             print(response_.get('url'))
