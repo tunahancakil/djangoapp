@@ -86,7 +86,7 @@ class AnketGonderAdmin(admin.ModelAdmin):
             myobj = {"Authentication": {           
                 "apikey": "4775500361",           
                 "apisecret": "0n6hu04dyiz23xyh9m6m"       },
-                "message": "TIKLATINIZ. {}".format(response_url),
+                "message": "Anketinize ulaşmak için aşağıdaki linke tıklayınız. {}".format(response_url),
                 "msisdnArray": [e.iletisim_no],
                 "originator": "TUNAHNCAKIL",
                 "senddate": "",       
