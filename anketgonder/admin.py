@@ -82,7 +82,7 @@ class AnketGonderAdmin(admin.ModelAdmin):
             response_ = b.shorten('http://www.benipuanla.net/tema/anket/' + str(encoded)[2:-1])
             print(response_.get('url'))
             response_url = str(response_.get('url'))
-            url = 'http://sms.corvass.net/jsona'
+            url = 'http://sms.corvass.net/json'
             myobj = {"Authentication": {           
                 "apikey": "4775500361",           
                 "apisecret": "0n6hu04dyiz23xyh9m6m"       },
