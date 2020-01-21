@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 import jwt
 
 def index(request):
-    return render(request,'anket-tema/index.html')
+    return render(request,'anket-tema/index.html') 
 
 def head(request):
     return render(request,'anket-tema/iletisim.html')
@@ -16,9 +16,6 @@ def head(request):
 def iletisim(request):
     Yazı = "Contact"
     return render(request,'anket-tema/iletisim.html',context=Yazı)
-
-def base(request):
-    return render(request,'anket-tema/base.html')
 
 def anket_form_view(request,encoded):
     key = 'secret'

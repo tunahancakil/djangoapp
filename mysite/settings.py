@@ -28,9 +28,9 @@ if os.path.isfile(dotenv_file):
 SECRET_KEY = 'j-khsnkvnqi5+tf05lw9%e_lvn4^l(wf8pk$d5pbe9%h3r1ybi'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['*',]
+ALLOWED_HOSTS = ['127.0.0.1','.herokuapp.com']
 
 
 # Application definition
@@ -53,7 +53,7 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    #'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -152,13 +152,13 @@ del DATABASES['default']['OPTIONS']['sslmode']
 
 SESSION_COOKIE_SECURE = True
 
-SECURE_SSL_REDIRECT = True
+SECURE_SSL_REDIRECT = False
 
 SECURE_BROWSER_XSS_FILTER = True
 
 SECURE_CONTENT_TYPE_NOSNIFF= True
 
-CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = False
 
 X_FRAME_OPTIONS = 'DENY'
 

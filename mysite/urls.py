@@ -20,11 +20,9 @@ from anket.views import *
 from anketgonder.views import *
 
 urlpatterns = [
-    path('tema/index',index,name='index'),
-    path('tema/base',base,name='base'),
-    path('tema/head',head,name='head'),
-    path('tema/iletisim',head,name='iletisim'),
-    path('', home_view, name='home'),
+    path('',index,name='index'),
+    path('iletisim',head,name='iletisim'),
+    #path('', home_view, name='home'),
     path('admin/', admin.site.urls),
     path('tema/anket/<str:encoded>',anket_form_view, name='anket_form'),
     path('thanks', thanks, name='thanks'),
