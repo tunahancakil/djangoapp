@@ -46,7 +46,6 @@ INSTALLED_APPS = [
     'anketgonder',
     'crispy_forms',
     'bitly_api',
-    'import_export',
 ]
 
 MIDDLEWARE = [
