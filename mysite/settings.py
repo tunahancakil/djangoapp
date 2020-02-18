@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'anketgonder',
     'crispy_forms',
     'bitly_api',
+    'import_export',
 ]
 
 MIDDLEWARE = [
@@ -145,6 +146,8 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static")
 ]
 
+FILE_UPLOAD_HANDLERS = ("django_excel.ExcelMemoryFileUploadHandler",
+                        "django_excel.TemporaryExcelFileUploadHandler")
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 

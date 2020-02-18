@@ -8,7 +8,7 @@ class Kurumlar(models.Model):
     iletisim_no = models.CharField(max_length=10,verbose_name="İletişim No")
     email = models.EmailField(max_length=50,verbose_name="E-mail")    
     puan = models.IntegerField(default=0)
-    islem_tarihi = models.DateTimeField()
+    islem_tarihi = models.DateTimeField(auto_now_add=True)
     kullanici_adi = models.CharField(max_length=50)
 
     def __str__(self):
@@ -21,7 +21,7 @@ class Yoneticiler(models.Model):
     email = models.EmailField(max_length=50,verbose_name="E-mail")
     iletisim_no = models.CharField(max_length=10,verbose_name="İletişim No")
     kurum = models.ForeignKey(Kurumlar, on_delete=models.CASCADE)
-
+    
     def __str__(self):
         return "%s %s %s" % (self.ad, self.soyad, self.kurum.unvan)
 
@@ -31,15 +31,12 @@ class Isciler(models.Model):
     soyad = models.CharField(max_length=50,verbose_name="Soyad")
     email = models.EmailField(max_length=50,verbose_name="E-mail")
     iletisim_no = models.CharField(max_length=10,verbose_name="İletişim No")
-    yonetici = models.ManyToManyField(Yoneticiler)
-    #yonetici = models.ForeignKey(Yoneticiler,on_delete=models.CASCADE)
-     
-    kurum = models.ForeignKey(Kurumlar, on_delete=models.CASCADE)
+    yonetici = models.ForeignKey(Yoneticiler,on_delete=models.CASCADE)
     islem_tarihi = models.DateField(auto_now_add=True)
 
     class Meta:
         ordering = ('id',)
-
+    
     def __str__(self):
         return "%s %s %s %s" % (self.id,self.ad,self.soyad,self.email)
 
