@@ -33,6 +33,7 @@ class Isciler(models.Model):
     iletisim_no = models.CharField(max_length=10,verbose_name="İletişim No")
     yonetici = models.ManyToManyField(Yoneticiler)
     #yonetici = models.ForeignKey(Yoneticiler,on_delete=models.CASCADE)
+     
     kurum = models.ForeignKey(Kurumlar, on_delete=models.CASCADE)
     islem_tarihi = models.DateField(auto_now_add=True)
 
