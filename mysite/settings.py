@@ -53,7 +53,7 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    #'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -145,12 +145,14 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static")
 ]
 
+
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 django_heroku.settings(locals())
 del DATABASES['default']['OPTIONS']['sslmode']
 
-SESSION_COOKIE_SECURE = True
+
+#SESSION_COOKIE_SECURE = True
 
 SECURE_SSL_REDIRECT = False
 
@@ -158,7 +160,7 @@ SECURE_BROWSER_XSS_FILTER = True
 
 SECURE_CONTENT_TYPE_NOSNIFF= True
 
-CSRF_COOKIE_SECURE = False
+#CSRF_COOKIE_SECURE = False
 
 X_FRAME_OPTIONS = 'DENY'
 

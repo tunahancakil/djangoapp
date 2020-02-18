@@ -19,6 +19,10 @@ from home.views import home_view
 from anket.views import *
 from anketgonder.views import *
 
+admin.site.site_header = "TT Yazılım Admin Panel"
+admin.site.site_title = "TT Yazılım Admin Portal"
+admin.site.index_title = "TT Yazılım Admin Portala Hoşgeldiniz"
+
 urlpatterns = [
     path('',index,name='index'),
     path('iletisim',head,name='iletisim'),
