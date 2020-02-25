@@ -65,7 +65,7 @@
         <div class="container-fluid">
         <div class="d-flex justify-content-center" >
         <form method="POST" >
-            
+        {% csrf_token %}
         {% for soru in form.anket.anket_soru_id.all %}
         <div class="alan">
         <h3 class="baslik">{{ soru.soru_icerik}}</h3>
