@@ -35,11 +35,11 @@ class SorularAdmin(admin.ModelAdmin):
 
 @admin.register(Yoneticiler)
 class YoneticilerAdmin(admin.ModelAdmin):
-    list_display = ['soyad','kurum',]
+    list_display = ['ad','soyad','kurum',]
 
 @admin.register(Isciler)
 class IscilerAdmin(admin.ModelAdmin):
-    list_display  = ['soyad','email','iletisim_no']
+    list_display  = ['ad','soyad','email','iletisim_no']
     list_filter = ['islem_tarihi']
 
     change_list_template = "anket-tema/excel-upload.html"    
