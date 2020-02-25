@@ -10,8 +10,11 @@ import jwt
 def index(request):
     return render(request,'anket-tema/index.html') 
 
-def head(request):
+def contact(request):
     return render(request,'anket-tema/iletisim.html')
+
+def article(request):
+    return render(request,'anket-tema/makale.html')
 
 def iletisim(request):
     Yazı = "Contact"

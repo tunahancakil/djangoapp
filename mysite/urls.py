@@ -25,7 +25,8 @@ admin.site.index_title = "TT Yazılım Admin Portala Hoşgeldiniz"
 
 urlpatterns = [
     path('',index,name='index'),
-    path('iletisim',head,name='iletisim'),
+    path('iletisim',contact,name='iletisim'),
+    path('makale',article,name='makale'),
     #path('', home_view, name='home'),
     path('admin/', admin.site.urls),
     path('tema/anket/<str:encoded>',anket_form_view, name='anket_form'),
