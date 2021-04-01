@@ -10,6 +10,7 @@ https://github.com/tunahancakil/djangoapp.git
 Create a virtual environment to install dependencies in and activate it:
 
 $ virtualenv2 --no-site-packages env
+
 $ source env/bin/activate
 
 Then install the dependencies:
@@ -19,4 +20,5 @@ Then install the dependencies:
 Once pip has finished downloading the dependencies:
 
 (env)$ cd project
+
 (env)$ python manage.py runserver
